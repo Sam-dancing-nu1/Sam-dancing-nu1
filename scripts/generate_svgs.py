@@ -59,46 +59,47 @@ def heatmap(t, s):
     return svg_doc(W, ly + 20, body, css=css)
 
 
-# ---------------- languages ----------------
+# ---------------- languages（右列窄版，600 宽） ----------------
 def langs(t, s):
     rows = s["languages"]
     if not rows:
         return None
+    NW = 600
     mx = max(r["size"] for r in rows)
-    bar_x, bar_w_max, bar_h = 150, 600, 12
-    y = 40
-    body = pixel_text(16, 20, "LANGUAGES - BY BYTE SIZE (INCL. FORKS)", 8, t["muted"])
+    bar_x, bar_w_max, bar_h = 128, 390, 12
+    y = 36
+    body = pixel_text(16, 20, "LANGUAGES · INCL. FORKS", 8, t["muted"])
     for r in rows:
         w = max(4, int(bar_w_max * r["size"] / mx))
         fill = blend(r["color"], t["bg"], 0.4)
-        body += pixel_text(16, y + 10, r["name"][:14].upper(), 8, t["ink"])
+        body += pixel_text(16, y + 10, r["name"][:12].upper(), 8, t["ink"])
         body += ('<rect x="%d" y="%d" width="%d" height="%d" fill="%s" stroke="%s" stroke-width="2"/>'
                  % (bar_x, y, w, bar_h, fill, t["stroke"]))
         pct = "%.1f%%" % (r["size"] / mx * 100)
-        body += pixel_text(W - 16, y + 10, pct, 8, t["muted"], anchor="end")
+        body += pixel_text(NW - 16, y + 10, pct, 8, t["muted"], anchor="end")
         y += 26
-    return svg_doc(W, y + 6, body, css="")
+    return svg_doc(NW, y + 6, body, css="")
 
 
-# ---------------- numbers ----------------
-def numbers(t, s):
+# ---------------- stats-mini（左列竖排数字卡，240 宽） ----------------
+def stats_mini(t, s):
     cards = [
         ("CONTRIBUTIONS", str(s["contributions"]["total"])),
         ("STARS", str(s["stars"])),
         ("PUBLIC REPOS", str(s["publicRepos"])),
     ]
-    cw, ch, gap_, y = 250, 84, 30, 12
-    x = (W - (cw * 3 + gap_ * 2)) // 2
+    NW, cw, ch, y = 240, 216, 66, 10
+    x_off = 12
     body = ""
     for label, val in cards:
         body += ('<rect x="%d" y="%d" width="%d" height="%d" fill="%s"/>'  # 硬阴影
                  '<rect x="%d" y="%d" width="%d" height="%d" fill="%s" stroke="%s" stroke-width="2"/>'
-                 % (x + 4, y + 4, cw, ch, t["line2"],
-                    x, y, cw, ch, t["surface"], t["stroke"]))
-        body += pixel_text(x + cw // 2, y + 26, label, 8, t["muted"], anchor="middle")
-        body += pixel_text(x + cw // 2, y + 64, val, 24, t["acc_deep"], anchor="middle")
-        x += cw + gap_
-    return svg_doc(W, y + ch + 16, body, css="")
+                 % (x_off + 4, y + 4, cw, ch, t["line2"],
+                    x_off, y, cw, ch, t["surface"], t["stroke"]))
+        body += pixel_text(x_off + 14, y + 24, label, 8, t["muted"])
+        body += pixel_text(x_off + cw - 14, y + 50, val, 16, t["acc_deep"], anchor="end")
+        y += ch + 12
+    return svg_doc(NW, y, body, css="")
 
 
 # ---------------- avatar 像素化 ----------------
@@ -141,7 +142,7 @@ def main():
         lg = langs(t, s)
         if lg:
             write(os.path.join(ASSETS, "stats", "langs-%s.svg" % theme), lg)
-        write(os.path.join(ASSETS, "stats", "numbers-%s.svg" % theme), numbers(t, s))
+        write(os.path.join(ASSETS, "stats", "numbers-%s.svg" % theme), stats_mini(t, s))
     if not skip_avatar:
         pixelate_avatar(s)
     print("done")

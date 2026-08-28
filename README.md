@@ -1,4 +1,4 @@
-<!-- SAM-DANCING · GitHub Profile · 8-bit 像素治愈风 -->
+<!-- SAM-DANCING · GitHub Profile · 8-bit 像素治愈风 · 左右两列布局 -->
 <!-- 深浅双主题：SVG 均为 -light/-dark 两份，由 prefers-color-scheme 自动切换 -->
 
 <p align="center">
@@ -8,99 +8,56 @@
   </picture>
 </p>
 
-<p align="center">
-  <strong>独立开发者 · AI Agent Builder · Android Rider</strong><br/>
-  风雨吹我两三年，归来仍是顺风局。<br/><br/>
-  <a href="https://sam-dancing.work">sam-dancing.work</a>
-</p>
+<table>
+<tr>
+<td width="32%" valign="top">
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-pixel-dark.svg">
-    <img src="assets/divider-pixel-light.svg" alt="" width="880" />
-  </picture>
-</p>
+<b>独立开发者 · AI Agent Builder · Android Rider</b><br/><br/>
+风雨吹我两三年，归来仍是顺风局。<br/><br/>
+<a href="https://sam-dancing.work">sam-dancing.work</a>
 
-## ⌗ STACK · 技术栈
+<br/><br/>
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/badges-tech-dark.svg">
-    <img src="assets/badges-tech-light.svg" alt="技术栈徽章：Kotlin / Python / TypeScript / Next.js / FastAPI / PostgreSQL / Android / Jetpack Compose / Docker / Nginx / Git / Tailwind CSS" width="880" />
-  </picture>
-</p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/stats/numbers-dark.svg">
+  <img src="assets/stats/numbers-light.svg" alt="贡献数 / Star 数 / 公开仓库数" width="240" />
+</picture>
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-pixel-dark.svg">
-    <img src="assets/divider-pixel-light.svg" alt="" width="880" />
-  </picture>
-</p>
+<br/><br/>
 
-## ⌗ STATS · GitHub 数据
+<b>FIND ME · 联系</b><br/>
+<a href="https://github.com/Sam-dancing-nu1">GITHUB</a><br/>
+<a href="https://space.bilibili.com/1373240281">BILIBILI</a><br/>
+<a href="mailto:sam-dancing@qq.com">EMAIL</a><br/>
+<a href="https://sam-dancing.work">BLOG · 博客</a>
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/stats/numbers-dark.svg">
-    <img src="assets/stats/numbers-light.svg" alt="贡献数 / Star 数 / 公开仓库数" width="880" />
-  </picture>
-</p>
+</td>
+<td width="68%" valign="top">
+
+<b>STACK · 技术栈</b>
+<br/>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/badges-tech-dark.svg">
+  <img src="assets/badges-tech-light.svg" alt="技术栈徽章" width="600" />
+</picture>
+
+<br/><br/>
+
+<b>LANGUAGES · 语言分布</b> <sub>含 fork · 每日自动刷新</sub>
+<br/>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/stats/langs-dark.svg">
+  <img src="assets/stats/langs-light.svg" alt="语言分布" width="600" />
+</picture>
+
+</td>
+</tr>
+</table>
 
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/stats/heatmap-dark.svg">
     <img src="assets/stats/heatmap-light.svg" alt="过去一年贡献热力图" width="880" />
-  </picture>
-</p>
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/stats/langs-dark.svg">
-    <img src="assets/stats/langs-light.svg" alt="语言分布" width="880" />
-  </picture>
-</p>
-
-<p align="center">
-  <sub>数据由 GitHub Actions 每日自动刷新 · 语言分布含 fork 仓库（如实统计）</sub>
-</p>
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-pixel-dark.svg">
-    <img src="assets/divider-pixel-light.svg" alt="" width="880" />
-  </picture>
-</p>
-
-## ⌗ BLOG · 博客
-
-<p align="center">
-  <a href="https://sam-dancing.work">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="assets/blog-banner-dark.svg">
-      <img src="assets/blog-banner-light.svg" alt="前往博客 sam-dancing.work" width="880" />
-    </picture>
-  </a>
-</p>
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-pixel-dark.svg">
-    <img src="assets/divider-pixel-light.svg" alt="" width="880" />
-  </picture>
-</p>
-
-## ⌗ CONTACT · 联系
-
-<p align="center">
-  <a href="https://github.com/Sam-dancing-nu1">GITHUB</a> ·
-  <a href="https://space.bilibili.com/1373240281">BILIBILI</a> ·
-  <a href="mailto:sam-dancing@qq.com">EMAIL</a>
-</p>
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/avatar-pixel-dark.svg">
-    <img src="assets/avatar-pixel-light.svg" alt="像素小人" width="128" />
   </picture>
 </p>
 

@@ -89,15 +89,58 @@ def esc(s):
     return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
 
 
-def svg_doc(w, h, body, bg=None, css=""):
-    """SVG 文档骨架。bg=None 表示透明底。"""
+def svg_doc(w, h, body, bg=None, css="", defs=""):
+    """SVG 文档骨架。bg=None 表示透明底；defs 放渐变等定义。"""
     bg_rect = '<rect x="0" y="0" width="%d" height="%d" fill="%s"/>' % (w, h, bg) if bg else ""
     style = "<style>%s %s</style>" % (font_face_css(), css) if (font_face_css() or css) else ""
     return (
         '<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" '
         'viewBox="0 0 %d %d" role="img">' % (w, h, w, h)
+        + ("<defs>%s</defs>" % defs if defs else "")
         + style + bg_rect + body + "</svg>"
     )
+
+
+def glow_defs(t, uid):
+    """双层柔和晕染背景（与 www 主站 bg-glow 同源思路：金 + 蓝紫两团微光）。
+    返回 (defs, 背景层 rect 序列)。uid 为 'light'/'dark'，用作渐变 id 防冲突。"""
+    if uid == "light":
+        base_top, base_bot = "#FDFBF7", "#F4EEE2"
+        c1, c2 = "#F6D9DE", "#DCEAF6"      # 淡粉 / 天空蓝
+    else:
+        base_top, base_bot = "#0B0C0F", "#101118"
+        c1, c2 = "#D8A25A", "#5E72E4"      # www 同款金 / 蓝紫
+    defs = (
+        '<linearGradient id="{u}-base" x1="0" y1="0" x2="0" y2="1">'
+        '<stop offset="0" stop-color="{a}"/><stop offset="1" stop-color="{b}"/></linearGradient>'
+        '<radialGradient id="{u}-g1" cx="0.18" cy="0.05" r="0.55">'
+        '<stop offset="0" stop-color="{c1}" stop-opacity="{o1}"/>'
+        '<stop offset="1" stop-color="{c1}" stop-opacity="0"/></radialGradient>'
+        '<radialGradient id="{u}-g2" cx="0.85" cy="0.12" r="0.6">'
+        '<stop offset="0" stop-color="{c2}" stop-opacity="{o2}"/>'
+        '<stop offset="1" stop-color="{c2}" stop-opacity="0"/></radialGradient>'
+    ).format(u=uid, a=base_top, b=base_bot, c1=c1, c2=c2,
+             o1=("0.55" if uid == "light" else "0.10"), o2=("0.5" if uid == "light" else "0.09"))
+    rects = (
+        '<rect width="100%" height="100%" fill="url(#{u}-base)"/>'
+        '<rect width="100%" height="100%" fill="url(#{u}-g1)"/>'
+        '<rect width="100%" height="100%" fill="url(#{u}-g2)"/>'
+    ).format(u=uid)
+    return defs, rects
+
+
+def pixel_cloud(x, y, s, color, opacity=1.0):
+    """像素云：底部平、顶部圆拱，由 3 个圆角 rect 组成。s 为基准格。"""
+    o = '' if opacity >= 1 else ' opacity="%s"' % opacity
+    return (
+        '<g fill="{c}"{o}>'
+        '<rect x="{x}" y="{y2}" width="{w5}" height="{s}" rx="{r}"/>'
+        '<rect x="{x1}" y="{y1}" width="{w3}" height="{s}" rx="{r}"/>'
+        '<rect x="{x2}" y="{y0}" width="{s}" height="{s}" rx="{r}"/>'
+        '</g>'
+    ).format(c=color, o=o, r=s // 2, s=s,
+             x=x, x1=x + s, x2=x + s * 2, y0=y, y1=y + s, y2=y + s * 2,
+             w3=s * 3, w5=s * 5)
 
 
 def pixel_text(x, y, text, size, color, anchor="start"):

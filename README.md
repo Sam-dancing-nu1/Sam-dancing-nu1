@@ -1,90 +1,110 @@
-<table>
-  <tr>
-    <td>
-      <h1>Hey, I'm <a href="https://sam-dancing.work" style="color:#d8a25a;text-decoration:none">Sam-Dancing</a> 👋</h1>
-      <p style="color:#c7c7c7;font-size:16px;line-height:1.8">
-        独立开发者 · AI Agent Builder · Android Rider<br/>
-        风雨吹我两三年，归来仍是顺风局。
-      </p>
-      <p style="color:#8a8a8a;font-size:14px">
-        🇨🇳 China &nbsp;·&nbsp; <a href="https://sam-dancing.work" style="color:#d8a25a">sam-dancing.work</a>
-      </p>
-    </td>
-    <td align="right">
-      <img src="https://github.com/Sam-dancing-nu1.png" width="120" style="border-radius:50%;border:2px solid rgba(216,162,90,0.4)" />
-    </td>
-  </tr>
-</table>
+<!-- SAM-DANCING · GitHub Profile · 8-bit 像素治愈风 -->
+<!-- 深浅双主题：SVG 均为 -light/-dark 两份，由 prefers-color-scheme 自动切换 -->
 
----
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/banner-hero-dark.svg">
+    <img src="assets/banner-hero-light.svg" alt="SAM-DANCING" width="880" />
+  </picture>
+</p>
 
-### What I Do
+<p align="center">
+  <strong>独立开发者 · AI Agent Builder · Android Rider</strong><br/>
+  风雨吹我两三年，归来仍是顺风局。<br/><br/>
+  <a href="https://sam-dancing.work">sam-dancing.work</a>
+</p>
 
-<table>
-  <tr>
-    <td width="50%" valign="top">
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-pixel-dark.svg">
+    <img src="assets/divider-pixel-light.svg" alt="" width="880" />
+  </picture>
+</p>
 
-**🎨 HIQY OPC Canvas**
-AI短剧创作平台 · TypeScript + Next.js
-`AI画布` `节点编辑` `视频生成`
+## ⌗ STACK · 技术栈
 
-**📱 Yùxué (愈学)**
-拯救你自己 · Kotlin + Compose
-`状态机` `端侧AI` `自我疗愈`
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/badges-tech-dark.svg">
+    <img src="assets/badges-tech-light.svg" alt="技术栈徽章：Kotlin / Python / TypeScript / Next.js / FastAPI / PostgreSQL / Android / Jetpack Compose / Docker / Nginx / Git / Tailwind CSS" width="880" />
+  </picture>
+</p>
 
-</td>
-    <td width="50%" valign="top">
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-pixel-dark.svg">
+    <img src="assets/divider-pixel-light.svg" alt="" width="880" />
+  </picture>
+</p>
 
-**📷 AI Camera**
-AI相机 + AI诊疗 · Python + FastAPI
-`图像识别` `SaaS` `景区拍照`
+## ⌗ STATS · GitHub 数据
 
-**🤖 Hermes Agent**
-The agent that grows with you · Python
-`AI协作` `技能系统` `自我进化`
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/stats/numbers-dark.svg">
+    <img src="assets/stats/numbers-light.svg" alt="贡献数 / Star 数 / 公开仓库数" width="880" />
+  </picture>
+</p>
 
-</td>
-  </tr>
-</table>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/stats/heatmap-dark.svg">
+    <img src="assets/stats/heatmap-light.svg" alt="过去一年贡献热力图" width="880" />
+  </picture>
+</p>
 
----
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/stats/langs-dark.svg">
+    <img src="assets/stats/langs-light.svg" alt="语言分布" width="880" />
+  </picture>
+</p>
 
-### Tech Stack
+<p align="center">
+  <sub>数据由 GitHub Actions 每日自动刷新 · 语言分布含 fork 仓库（如实统计）</sub>
+</p>
 
-`Kotlin` `Python` `TypeScript` `Next.js` `FastAPI` `PostgreSQL` `Android` `Jetpack Compose` `Docker` `Nginx` `Git` `Tailwind CSS`
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-pixel-dark.svg">
+    <img src="assets/divider-pixel-light.svg" alt="" width="880" />
+  </picture>
+</p>
 
----
+## ⌗ BLOG · 博客
 
-### Find Me
+<p align="center">
+  <a href="https://sam-dancing.work">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="assets/blog-banner-dark.svg">
+      <img src="assets/blog-banner-light.svg" alt="前往博客 sam-dancing.work" width="880" />
+    </picture>
+  </a>
+</p>
 
-<table>
-  <tr>
-    <td>
-      <a href="https://sam-dancing.work">
-        <img src="https://img.shields.io/badge/🌐_Website-d8a25a?style=flat&labelColor=1a1a1a&color=d8a25a" />
-      </a>
-    </td>
-    <td>
-      <a href="https://github.com/Sam-dancing-nu1">
-        <img src="https://img.shields.io/badge/🐙_GitHub-8a8a8a?style=flat&labelColor=1a1a1a" />
-      </a>
-    </td>
-    <td>
-      <a href="https://space.bilibili.com/1373240281">
-        <img src="https://img.shields.io/badge/📺_Bilibili-8a8a8a?style=flat&labelColor=1a1a1a" />
-      </a>
-    </td>
-    <td>
-      <a href="mailto:sam-dancing@qq.com">
-        <img src="https://img.shields.io/badge/📧_Email-8a8a8a?style=flat&labelColor=1a1a1a" />
-      </a>
-    </td>
-  </tr>
-</table>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/divider-pixel-dark.svg">
+    <img src="assets/divider-pixel-light.svg" alt="" width="880" />
+  </picture>
+</p>
 
----
+## ⌗ CONTACT · 联系
 
-<div align="center">
-  <sub>© 2024-2026 Sam-Dancing™ · All Rights Reserved · Lead Developer: Sam-Dancing</sub><br/>
-  <sub>本站由 ☁️ <a href="https://www.rainyun.com/dancing_" style="color:#d8a25a">雨云</a> 提供计算服务</sub>
-</div>
+<p align="center">
+  <a href="https://github.com/Sam-dancing-nu1">GITHUB</a> ·
+  <a href="https://space.bilibili.com/1373240281">BILIBILI</a> ·
+  <a href="mailto:sam-dancing@qq.com">EMAIL</a>
+</p>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/avatar-pixel-dark.svg">
+    <img src="assets/avatar-pixel-light.svg" alt="像素小人" width="128" />
+  </picture>
+</p>
+
+<p align="center">
+  <sub>© 2024-2026 Sam-Dancing™ · All Rights Reserved · Lead Developer: Sam-Dancing<br/>
+  本站由 <a href="https://rainyun.com/dancing_" target="_blank" rel="noopener">☁️ 雨云</a> 提供计算服务</sub>
+</p>

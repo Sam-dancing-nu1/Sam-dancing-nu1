@@ -105,6 +105,5 @@
 </p>
 
 <p align="center">
-  <sub>© 2024-2026 Sam-Dancing™ · All Rights Reserved · Lead Developer: Sam-Dancing<br/>
-  本站由 <a href="https://rainyun.com/dancing_" target="_blank" rel="noopener">☁️ 雨云</a> 提供计算服务</sub>
+  <sub>© 2024-2026 Sam-Dancing™ · All Rights Reserved · Lead Developer: Sam-Dancing</sub>
 </p>

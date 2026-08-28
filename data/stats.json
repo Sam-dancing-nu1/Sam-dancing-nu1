@@ -1,13 +1,13 @@
 {
  "schema": 1,
- "generatedAt": "2026-08-28T16:37:23Z",
+ "generatedAt": "2026-08-28T16:39:18Z",
  "login": "Sam-dancing-nu1",
  "name": "Sam-Dancing",
  "url": "https://github.com/Sam-dancing-nu1",
  "avatarUrl": "https://avatars.githubusercontent.com/u/180069876?u=ee035d5f1515be2972f681a35e40e6a9e58cb85d&v=4",
  "followers": 0,
  "following": 2,
- "publicRepos": 6,
+ "publicRepos": 4,
  "stars": 0,
  "contributions": {
   "total": 436,
@@ -2055,27 +2055,22 @@
   {
    "name": "Python",
    "color": "#3572A5",
-   "size": 61951250
+   "size": 61864002
   },
   {
    "name": "TypeScript",
    "color": "#3178c6",
-   "size": 26362335
+   "size": 16201243
   },
   {
    "name": "JavaScript",
    "color": "#f1e05a",
-   "size": 1924968
+   "size": 1448687
   },
   {
    "name": "HTML",
    "color": "#e34c26",
-   "size": 694612
-  },
-  {
-   "name": "CSS",
-   "color": "#663399",
-   "size": 467960
+   "size": 694244
   },
   {
    "name": "TeX",
@@ -2085,7 +2080,12 @@
   {
    "name": "Shell",
    "color": "#89e051",
-   "size": 364607
+   "size": 364191
+  },
+  {
+   "name": "CSS",
+   "color": "#663399",
+   "size": 280061
   },
   {
    "name": "PowerShell",
@@ -2095,18 +2095,8 @@
  ],
  "repos": [
   {
-   "name": "HIQY-opc-canvas",
-   "url": "https://github.com/Sam-dancing-nu1/HIQY-opc-canvas",
-   "stars": 0
-  },
-  {
    "name": "Sam-dancing-nu1",
    "url": "https://github.com/Sam-dancing-nu1/Sam-dancing-nu1",
-   "stars": 0
-  },
-  {
-   "name": "hiqy-the-more-one-studies",
-   "url": "https://github.com/Sam-dancing-nu1/hiqy-the-more-one-studies",
    "stars": 0
   }
  ]

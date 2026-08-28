@@ -10,7 +10,7 @@ import sys
 import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from svg_lib import THEMES, blend, pixel_text, pix, svg_doc, write
+from svg_lib import THEMES, blend, pixel_text, sans_text, pix, svg_doc, write
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS = os.path.join(ROOT, "assets")
@@ -27,18 +27,21 @@ def load_stats():
     return d
 
 
-# ---------------- heatmap ----------------
+# ---------------- heatmap（卡片底 + 系统字体标签） ----------------
 def heatmap(t, s):
     cell, gap = 12, 3
     weeks = s["contributions"]["weeks"]
     grid_w = len(weeks) * (cell + gap) - gap
     grid_h = 7 * (cell + gap) - gap
     x0 = (W - grid_w) // 2
-    y0 = 40
+    y0 = 52
     css = (".wk{opacity:0;animation:pop .35s ease forwards}"
            "@keyframes pop{to{opacity:1}}")
-    body = pixel_text(16, 20, "CONTRIBUTIONS - LAST 365 DAYS", 8, t["muted"])
-    body += pixel_text(W - 16, 20, str(s["contributions"]["total"]), 16, t["acc_deep"], anchor="end")
+    # 卡片底（不透明：主题切换失效时依然可读）
+    body = ('<rect x="0" y="0" width="%d" height="%d" fill="%s" stroke="%s" stroke-width="2" rx="12"/>'
+            % (W, 196, t["surface"], t["line2"]))
+    body += sans_text(24, 32, "CONTRIBUTIONS · LAST 365 DAYS", 13, t["muted"])
+    body += pixel_text(W - 24, 34, str(s["contributions"]["total"]), 16, t["acc_deep"], anchor="end")
     for wi, wcol in enumerate(weeks):
         col = ['<g class="wk" style="animation-delay:%dms">' % (wi * 18)]
         for di, day in enumerate(wcol["days"]):
@@ -49,36 +52,39 @@ def heatmap(t, s):
         col.append("</g>")
         body += "".join(col)
     # 图例
-    ly = y0 + grid_h + 18
-    lx = (W - (5 * 13 + 100)) // 2
-    body += pixel_text(lx, ly + 9, "LESS", 8, t["muted"])
-    lx += 46
+    ly = y0 + grid_h + 20
+    lx = (W - (5 * 13 + 110)) // 2
+    body += sans_text(lx, ly + 10, "LESS", 12, t["muted"], weight=500)
+    lx += 48
     for i in range(5):
-        body += '<rect x="%d" y="%d" width="10" height="10" rx="2" fill="%s"/>' % (lx + i * 13, ly, t["heat"][i])
-    body += pixel_text(lx + 5 * 13 + 6, ly + 9, "MORE", 8, t["muted"])
-    return svg_doc(W, ly + 20, body, css=css)
+        body += '<rect x="%d" y="%d" width="11" height="11" rx="2" fill="%s"/>' % (lx + i * 14, ly, t["heat"][i])
+    body += sans_text(lx + 5 * 14 + 8, ly + 10, "MORE", 12, t["muted"], weight=500)
+    return svg_doc(W, ly + 24, body, css=css)
 
 
-# ---------------- languages（右列窄版，600 宽） ----------------
+# ---------------- languages（右列窄版：卡片底 + 系统字体） ----------------
 def langs(t, s):
     rows = s["languages"]
     if not rows:
         return None
-    NW = 600
+    NW, y = 600, 46
     mx = max(r["size"] for r in rows)
-    bar_x, bar_w_max, bar_h = 128, 390, 12
-    y = 36
-    body = pixel_text(16, 20, "LANGUAGES · INCL. FORKS", 8, t["muted"])
+    bar_x, bar_w_max, bar_h = 170, 330, 14
+    # 卡片底
+    H = y + len(rows) * 28 + 14
+    body = ('<rect x="0" y="0" width="%d" height="%d" fill="%s" stroke="%s" stroke-width="2" rx="12"/>'
+            % (NW, H, t["surface"], t["line2"]))
+    body += sans_text(20, 30, "LANGUAGES · 含 fork · 每日刷新", 13, t["muted"])
     for r in rows:
-        w = max(4, int(bar_w_max * r["size"] / mx))
+        w = max(5, int(bar_w_max * r["size"] / mx))
         fill = blend(r["color"], t["bg"], 0.4)
-        body += pixel_text(16, y + 10, r["name"][:12].upper(), 8, t["ink"])
+        body += sans_text(20, y + 12, r["name"][:12], 13, t["ink"])
         body += ('<rect x="%d" y="%d" width="%d" height="%d" fill="%s" stroke="%s" stroke-width="2"/>'
                  % (bar_x, y, w, bar_h, fill, t["stroke"]))
         pct = "%.1f%%" % (r["size"] / mx * 100)
-        body += pixel_text(NW - 16, y + 10, pct, 8, t["muted"], anchor="end")
-        y += 26
-    return svg_doc(NW, y + 6, body, css="")
+        body += sans_text(NW - 20, y + 12, pct, 13, t["muted"], anchor="end")
+        y += 28
+    return svg_doc(NW, H, body, css="")
 
 
 # ---------------- stats-mini（左列竖排数字卡，240 宽） ----------------
@@ -96,7 +102,7 @@ def stats_mini(t, s):
                  '<rect x="%d" y="%d" width="%d" height="%d" fill="%s" stroke="%s" stroke-width="2"/>'
                  % (x_off + 4, y + 4, cw, ch, t["line2"],
                     x_off, y, cw, ch, t["surface"], t["stroke"]))
-        body += pixel_text(x_off + 14, y + 24, label, 8, t["muted"])
+        body += sans_text(x_off + 14, y + 26, label, 12, t["muted"])
         body += pixel_text(x_off + cw - 14, y + 50, val, 16, t["acc_deep"], anchor="end")
         y += ch + 12
     return svg_doc(NW, y, body, css="")

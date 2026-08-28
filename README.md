@@ -13,8 +13,7 @@
 <td width="32%" valign="top">
 
 <b>独立开发者 · AI Agent Builder · Android Rider</b><br/><br/>
-风雨吹我两三年，归来仍是顺风局。<br/><br/>
-<a href="https://sam-dancing.work">sam-dancing.work</a>
+风雨吹我两三年，归来仍是顺风局。
 
 <br/><br/>
 
@@ -25,11 +24,24 @@
 
 <br/><br/>
 
-<b>FIND ME · 联系</b><br/>
-<a href="https://github.com/Sam-dancing-nu1">GITHUB</a><br/>
-<a href="https://space.bilibili.com/1373240281">BILIBILI</a><br/>
-<a href="mailto:sam-dancing@qq.com">EMAIL</a><br/>
-<a href="https://sam-dancing.work">BLOG · 博客</a>
+<b>FIND ME · 联系</b>
+<br/>
+<a href="https://github.com/Sam-dancing-nu1"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/btn-github-dark.svg">
+  <img src="assets/btn-github-light.svg" alt="GitHub" width="240" />
+</picture></a>
+<a href="https://space.bilibili.com/1373240281"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/btn-bilibili-dark.svg">
+  <img src="assets/btn-bilibili-light.svg" alt="Bilibili" width="240" />
+</picture></a>
+<a href="mailto:sam-dancing@qq.com"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/btn-email-dark.svg">
+  <img src="assets/btn-email-light.svg" alt="Email" width="240" />
+</picture></a>
+<a href="https://sam-dancing.work"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/btn-blog-dark.svg">
+  <img src="assets/btn-blog-light.svg" alt="博客 sam-dancing.work" width="240" />
+</picture></a>
 
 </td>
 <td width="68%" valign="top">

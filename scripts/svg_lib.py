@@ -152,6 +152,18 @@ def pixel_text(x, y, text, size, color, anchor="start"):
     )
 
 
+SANS = "-apple-system,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif"
+
+def sans_text(x, y, text, size, color, anchor="start", weight=600, spacing=0):
+    """系统字体文本（数据图表用，可读性优先）。y 为基线。"""
+    sp = ' letter-spacing="%s"' % spacing if spacing else ""
+    return (
+        '<text x="%s" y="%s" font-family="%s" font-size="%s" font-weight="%s"'
+        ' fill="%s" text-anchor="%s"%s>%s</text>'
+        % (x, y, SANS, size, weight, color, anchor, sp, esc(text))
+    )
+
+
 def hard_rect(x, y, w, h, fill, stroke, shadow, off=3):
     """像素块 = 偏移硬阴影 + 2px 描边直角矩形。"""
     return (
@@ -162,18 +174,21 @@ def hard_rect(x, y, w, h, fill, stroke, shadow, off=3):
     )
 
 
-def pixel_badge(x, y, text, size, fill, deep, stroke, shadow, pad_x=12, h=None):
-    """单个像素徽章，返回 (svg, width)。size 为字号（8 的整数倍）。"""
+def pixel_badge(x, y, text, size, fill, deep, stroke, shadow, pad_x=14, h=None, font="sans"):
+    """单个像素徽章，返回 (svg, width)。font='sans' 系统字体 / 'px' 像素字。"""
     if h is None:
-        h = size + 14
+        h = size + 16
     w = len(text) * size + pad_x * 2
     body = hard_rect(x, y, w, h, fill, deep if deep else stroke, shadow)
     ty = y + (h + size) // 2 - 2
-    body += pixel_text(x + pad_x, ty, text, size, deep)
+    if font == "px":
+        body += pixel_text(x + pad_x, ty, text, size, deep)
+    else:
+        body += sans_text(x + pad_x, y + h // 2 + size * 0.36, text, size, deep, weight=700)
     return body, w
 
 
-def badge_row(texts, y, size, t, shadow, gap=18, total_w=880, h=None):
+def badge_row(texts, y, size, t, shadow, gap=18, total_w=880, h=None, font="sans"):
     """一行像素徽章，整体居中。返回 (svg, 行高)。"""
     if h is None:
         h = size + 14
@@ -183,7 +198,7 @@ def badge_row(texts, y, size, t, shadow, gap=18, total_w=880, h=None):
     parts = []
     for i, t_ in enumerate(texts):
         fill_k, deep_k = _BADGE_CYCLE[i % len(_BADGE_CYCLE)]
-        s, w = pixel_badge(x, y, t_, size, t[fill_k], t[deep_k], t["stroke"], shadow, h=h)
+        s, w = pixel_badge(x, y, t_, size, t[fill_k], t[deep_k], t["stroke"], shadow, h=h, font=font)
         parts.append(s)
         x += w + gap
     return "".join(parts), h

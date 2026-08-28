@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write   # 需要把刷新后的数据/SVG 推回仓库
 
 concurrency:
   group: refresh-stats
@@ -19,8 +19,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          # 必须用 PAT：GITHUB_TOKEN 推送的提交不会触发 profile 页重新渲染
-          token: ${{ secrets.GH_STATS_TOKEN }}
+          # 优先用 PAT；未配 PAT 时回退 GITHUB_TOKEN
+          # （差别：GITHUB_TOKEN 的 contributionCalendar 有返回 0 的已知问题，PAT 更准）
+          token: ${{ secrets.GH_STATS_TOKEN || github.token }}
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -32,7 +33,7 @@ jobs:
 
       - name: Fetch stats & regenerate SVGs
         env:
-          GH_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_STATS_TOKEN || github.token }}
         run: bash scripts/fetch_stats.sh
 
       - name: Commit if changed

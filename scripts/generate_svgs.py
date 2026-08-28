@@ -40,7 +40,8 @@ def heatmap(t, s):
     # 卡片底（不透明：主题切换失效时依然可读）
     body = ('<rect x="0" y="0" width="%d" height="%d" fill="%s" stroke="%s" stroke-width="2" rx="12"/>'
             % (W, 196, t["surface"], t["line2"]))
-    body += sans_text(24, 32, "CONTRIBUTIONS · LAST 365 DAYS", 13, t["muted"])
+    body += sans_text(24, 32, "CONTRIBUTIONS · LAST 365 DAYS · 更新于 %s"
+                      % s.get("generatedAt", "")[:10], 13, t["muted"])
     body += pixel_text(W - 24, 34, str(s["contributions"]["total"]), 16, t["acc_deep"], anchor="end")
     for wi, wcol in enumerate(weeks):
         col = ['<g class="wk" style="animation-delay:%dms">' % (wi * 18)]
@@ -74,7 +75,7 @@ def langs(t, s):
     H = y + len(rows) * 28 + 14
     body = ('<rect x="0" y="0" width="%d" height="%d" fill="%s" stroke="%s" stroke-width="2" rx="12"/>'
             % (NW, H, t["surface"], t["line2"]))
-    body += sans_text(20, 30, "LANGUAGES · 含 fork · 每日刷新", 13, t["muted"])
+    body += sans_text(20, 30, "LANGUAGES · 含 fork · 更新于 %s" % s.get("generatedAt", "")[:10], 13, t["muted"])
     for r in rows:
         w = max(5, int(bar_w_max * r["size"] / mx))
         fill = blend(r["color"], t["bg"], 0.4)

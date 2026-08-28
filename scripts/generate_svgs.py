@@ -87,25 +87,24 @@ def langs(t, s):
     return svg_doc(NW, H, body, css="")
 
 
-# ---------------- stats-mini（左列竖排数字卡，240 宽） ----------------
+# ---------------- stats-mini（左列横排小卡：CONTRIBUTIONS / REPOS） ----------------
 def stats_mini(t, s):
     cards = [
-        ("CONTRIBUTIONS", str(s["contributions"]["total"])),
-        ("STARS", str(s["stars"])),
-        ("PUBLIC REPOS", str(s["publicRepos"])),
+        ("CONTRIB", str(s["contributions"]["total"])),
+        ("REPOS", str(s["publicRepos"])),
     ]
-    NW, cw, ch, y = 240, 216, 66, 10
-    x_off = 12
+    NW, cw, ch, y = 240, 112, 72, 10
+    x = (NW - (cw * 2 + 16)) // 2
     body = ""
     for label, val in cards:
         body += ('<rect x="%d" y="%d" width="%d" height="%d" fill="%s"/>'  # 硬阴影
-                 '<rect x="%d" y="%d" width="%d" height="%d" fill="%s" stroke="%s" stroke-width="2"/>'
-                 % (x_off + 4, y + 4, cw, ch, t["line2"],
-                    x_off, y, cw, ch, t["surface"], t["stroke"]))
-        body += sans_text(x_off + 14, y + 26, label, 12, t["muted"])
-        body += pixel_text(x_off + cw - 14, y + 50, val, 16, t["acc_deep"], anchor="end")
-        y += ch + 12
-    return svg_doc(NW, y, body, css="")
+                 '<rect x="%d" y="%d" width="%d" height="%d" fill="%s" stroke="%s" stroke-width="2" rx="8"/>'
+                 % (x + 4, y + 4, cw, ch, t["line2"],
+                    x, y, cw, ch, t["surface"], t["stroke"]))
+        body += sans_text(x + 12, y + 26, label, 12, t["muted"])
+        body += pixel_text(x + cw - 12, y + 56, val, 16, t["acc_deep"], anchor="end")
+        x += cw + 16
+    return svg_doc(NW, y + ch + 6, body, css="")
 
 
 # ---------------- avatar 像素化 ----------------

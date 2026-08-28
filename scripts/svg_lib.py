@@ -94,7 +94,8 @@ def svg_doc(w, h, body, bg=None, css="", defs=""):
     bg_rect = '<rect x="0" y="0" width="%d" height="%d" fill="%s"/>' % (w, h, bg) if bg else ""
     style = "<style>%s %s</style>" % (font_face_css(), css) if (font_face_css() or css) else ""
     return (
-        '<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" '
+        '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" '
+        'width="%d" height="%d" '
         'viewBox="0 0 %d %d" role="img">' % (w, h, w, h)
         + ("<defs>%s</defs>" % defs if defs else "")
         + style + bg_rect + body + "</svg>"

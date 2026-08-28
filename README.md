@@ -14,16 +14,21 @@
 
 <br/><br/>
 
-<img src="assets/stats/numbers-dark.svg" alt="贡献数 / Star 数 / 公开仓库数" width="240" />
+<img src="assets/stats/numbers-dark.svg" alt="贡献数 / 仓库数" width="240" />
+
+<br/>
+
+<img src="assets/snake-dark.svg" alt="Stars · 像素贪吃蛇" width="240" />
 
 <br/><br/>
 
-<b>FIND ME · 联系</b>
+<b>FIND ME</b>
 <br/>
-<a href="https://github.com/Sam-dancing-nu1"><img src="assets/btn-github-dark.svg" alt="GitHub" width="240" /></a>
-<a href="https://space.bilibili.com/1373240281"><img src="assets/btn-bilibili-dark.svg" alt="Bilibili" width="240" /></a>
-<a href="mailto:sam-dancing@qq.com"><img src="assets/btn-email-dark.svg" alt="Email" width="240" /></a>
-<a href="https://sam-dancing.work"><img src="assets/btn-blog-dark.svg" alt="博客 sam-dancing.work" width="240" /></a>
+<a href="https://github.com/Sam-dancing-nu1"><img src="assets/btn-github-dark.svg" alt="GitHub" width="116" /></a>
+<a href="https://space.bilibili.com/1373240281"><img src="assets/btn-bilibili-dark.svg" alt="Bilibili" width="116" /></a>
+<br/>
+<a href="mailto:sam-dancing@qq.com"><img src="assets/btn-email-dark.svg" alt="Email" width="116" /></a>
+<a href="https://sam-dancing.work"><img src="assets/btn-blog-dark.svg" alt="博客 sam-dancing.work" width="116" /></a>
 
 </td>
 <td width="68%" valign="top">

@@ -1,227 +1,151 @@
 # -*- coding: utf-8 -*-
-"""svg_lib.py — 8-bit 像素治愈风 SVG 公共库（静态素材与 Actions 生成共用）。
+"""svg_lib.py — SVG 公共库：照搬 www 主站（sam-dancing.work）的视觉体系。
 
-设计规则（勿改）：
-- 8-bit 三件套：2px 描边 + 直角 + 偏移硬阴影（零模糊）
-- 像素字：Press Start 2P，字号只用 8 的整数倍，坐标取整
-- SVG 内只放英文/数字；中文一律放 README 骨架层
-- 金色 #D8A25A 只做填充/描边；当文字色用时 light 主题必须用 acc_deep（对比度已验证）
+设计规则（勿改，值全部实测自主站 index.html :root）：
+- 色板 = 主站令牌：--bg:#0a0a0b / --ink:#ededed / --accent:#d8a25a 等
+- 背景 = 主站同款：照片 Ken Burns 30s 缩放 + 双层 scrim 渐变遮罩 + feTurbulence 噪点
+- 字体 = 系统等宽栈（JetBrains Mono 优先），中文走 PingFang/雅黑 fallback
 """
 import base64
 import os
 
-_FONT_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "fonts", "press-start-2p.woff2")
+MONO = ("'JBM','JetBrains Mono','SFMono-Regular','SF Mono',Consolas,"
+        "'Liberation Mono','PingFang SC','Microsoft YaHei',monospace")
+DISPLAY = "'Space Grotesk',system-ui,'PingFang SC','Microsoft YaHei',sans-serif"
 
-def font_base64():
-    with open(_FONT_PATH, "rb") as f:
-        return base64.b64encode(f.read()).decode("ascii")
+_FONT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                         "fonts")
+
 
 def font_face_css():
-    b64 = font_base64()
-    return (
-        "@font-face{font-family:'PSP2';"
-        "src:url(data:font/woff2;base64,%s) format('woff2');"
-        "font-weight:400;font-style:normal;}" % b64
-    )
+    """内嵌 JetBrains Mono（latin 子集 400/700），不靠系统字体。"""
+    out = []
+    for wt in (400, 700):
+        with open(os.path.join(_FONT_DIR, "jetbrains-mono-latin-%d.woff2" % wt),
+                  "rb") as f:
+            b64 = base64.b64encode(f.read()).decode("ascii")
+        out.append("@font-face{font-family:'JBM';font-weight:%d;"
+                   "src:url(data:font/woff2;base64,%s) format('woff2');}"
+                   % (wt, b64))
+    return "".join(out)
 
-# ---------------- 色板（对比度已实测） ----------------
-LIGHT = {
-    "bg":       "#FDFBF7",   # 奶油白页面底
-    "surface":  "#FFFFFF",
-    "surface2": "#F5F0E7",
-    "ink":      "#2E2A26",   # 13.77:1 AAA
-    "muted":    "#6B6358",   #  5.72:1 AA
-    "line":     "#E9E1D4",
-    "line2":    "#D9CDBC",
-    "stroke":   "#2E2A26",   # 8-bit 硬描边
-    "acc":      "#D8A25A",   # 只做填充/描边/装饰
-    "acc_deep": "#7E5517",   # 金色文字专用（bg 上 6.35:1）
-    "acc_lite": "#F3DDB4",
-    "pink":     "#FBE3E8",  "pink_deep":  "#A83F5B",
-    "mint":     "#DFF2E6",  "mint_deep":  "#26724F",
-    "sky":      "#E2F0F9",  "sky_deep":   "#25618F",
-    "gold":     "#F3DDB4",  "gold_deep":  "#7E5517",
-    # 热力 5 级（浅色：从米色到深金）
-    "heat": ["#EDE7DC", "#F5E3C0", "#EDCB8E", "#D8A25A", "#B07A32"],
-    "title_main": "#7E5517",   # 标题主色
-    "title_shadow": "#D8A25A", # 标题硬阴影
-}
-
+# ---------------- 主站色板（sam-dancing.work :root 实测值） ----------------
 DARK = {
-    "bg":       "#0B0C0F",   # 与 www 主站同源
-    "surface":  "#15161B",
-    "surface2": "#1B1C22",
-    "ink":      "#E8EAEF",
-    "muted":    "#8A90A0",
-    "line":     "#23242A",
-    "line2":    "#2C2E35",
-    "stroke":   "#3A3E48",
-    "acc":      "#D8A25A",   # 深底上金色对比充足，可直接当文字
-    "acc_deep": "#E8A84C",
-    "acc_lite": "#5A431F",
-    "pink":     "#3A2429",  "pink_deep":  "#E8A0B0",
-    "mint":     "#1E3229",  "mint_deep":  "#8FCFB2",
-    "sky":      "#1E2C3A",  "sky_deep":   "#8FB8DC",
-    "gold":     "#3A2F1A",  "gold_deep":  "#E8C078",
-    "heat": ["#23242A", "#4A3A22", "#7A5A2C", "#B07A32", "#E8A84C"],
-    "title_main": "#D8A25A",
-    "title_shadow": "#5A3E14",
+    "bg":      "#0a0a0b",
+    "ink":     "#ededed",
+    "ink2":    "#c7c7c7",
+    "muted":   "#8a8a8a",
+    "faint":   "#5d5d61",
+    "line":    "rgba(255,255,255,.09)",
+    "line2":   "rgba(255,255,255,.17)",
+    "acc":     "#d8a25a",
+    "acc2":    "#e7bd84",
+    "ok":      "#74d39a",
+    "panel":   "rgba(255,255,255,.022)",
+    "surface2": "rgba(255,255,255,.045)",
+    # 热力 5 级（金色系，空格色贴近 bg）
+    "heat": ["#17181a", "#4a3a22", "#7a5a2c", "#b07a32", "#e8a84c"],
 }
 
-THEMES = {"light": LIGHT, "dark": DARK}
-
-# 徽章轮换语义色（浅底, 深字/描边）
-_BADGE_CYCLE = [("mint", "mint_deep"), ("sky", "sky_deep"), ("pink", "pink_deep"), ("gold", "gold_deep")]
-
-
-def blend(hex_color, hex_bg, ratio=0.4):
-    """把 hex_color 与 hex_bg 按 ratio 混合（用于把 GitHub 语言色降饱和）。"""
-    def ch(c, i):
-        c = c.lstrip("#")
-        return int(c[i * 2:i * 2 + 2], 16)
-    r = round(ch(hex_color, 0) * (1 - ratio) + ch(hex_bg, 0) * ratio)
-    g = round(ch(hex_color, 1) * (1 - ratio) + ch(hex_bg, 1) * ratio)
-    b = round(ch(hex_color, 2) * (1 - ratio) + ch(hex_bg, 2) * ratio)
-    return "#%02X%02X%02X" % (r, g, b)
+THEMES = {"dark": DARK}
 
 
 def esc(s):
     return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
 
 
-def svg_doc(w, h, body, bg=None, css="", defs=""):
-    """SVG 文档骨架。bg=None 表示透明底；defs 放渐变等定义。"""
-    bg_rect = '<rect x="0" y="0" width="%d" height="%d" fill="%s"/>' % (w, h, bg) if bg else ""
-    style = "<style>%s %s</style>" % (font_face_css(), css) if (font_face_css() or css) else ""
+def svg_doc(w, h, body, css="", defs=""):
+    style = "<style>%s%s</style>" % (font_face_css(), css)
     return (
-        '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" '
-        'width="%d" height="%d" '
+        '<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" '
         'viewBox="0 0 %d %d" role="img">' % (w, h, w, h)
         + ("<defs>%s</defs>" % defs if defs else "")
-        + style + bg_rect + body + "</svg>"
+        + style + body + "</svg>"
     )
 
 
-def glow_defs(t, uid):
-    """双层柔和晕染背景（与 www 主站 bg-glow 同源思路：金 + 蓝紫两团微光）。
-    返回 (defs, 背景层 rect 序列)。uid 为 'light'/'dark'，用作渐变 id 防冲突。"""
-    if uid == "light":
-        base_top, base_bot = "#FDFBF7", "#F4EEE2"
-        c1, c2 = "#F6D9DE", "#DCEAF6"      # 淡粉 / 天空蓝
-    else:
-        base_top, base_bot = "#0B0C0F", "#101118"
-        c1, c2 = "#D8A25A", "#5E72E4"      # www 同款金 / 蓝紫
+_BG_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                       "assets", "img")
+BG_NAMES = ["bg-01", "bg-02", "bg-03", "bg-04", "bj1", "bj2"]
+BG_INTERVAL = 7.0        # 主站同款：7s 切换，2s 淡入淡出
+
+
+def bg_layers(w, h):
+    """主站同款背景轮播：6 张照片交叉淡入淡出（7s/张）+ Ken Burns 缩放
+    + scrim 双层渐变 + grain 噪点。返回 (defs, svg_body)。"""
+    imgs = []
+    for n in BG_NAMES:
+        with open(os.path.join(_BG_DIR, n + ".webp"), "rb") as f:
+            imgs.append(base64.b64encode(f.read()).decode("ascii"))
     defs = (
-        '<linearGradient id="{u}-base" x1="0" y1="0" x2="0" y2="1">'
-        '<stop offset="0" stop-color="{a}"/><stop offset="1" stop-color="{b}"/></linearGradient>'
-        '<radialGradient id="{u}-g1" cx="0.18" cy="0.05" r="0.55">'
-        '<stop offset="0" stop-color="{c1}" stop-opacity="{o1}"/>'
-        '<stop offset="1" stop-color="{c1}" stop-opacity="0"/></radialGradient>'
-        '<radialGradient id="{u}-g2" cx="0.85" cy="0.12" r="0.6">'
-        '<stop offset="0" stop-color="{c2}" stop-opacity="{o2}"/>'
-        '<stop offset="1" stop-color="{c2}" stop-opacity="0"/></radialGradient>'
-    ).format(u=uid, a=base_top, b=base_bot, c1=c1, c2=c2,
-             o1=("0.55" if uid == "light" else "0.10"), o2=("0.5" if uid == "light" else "0.09"))
-    rects = (
-        '<rect width="100%" height="100%" fill="url(#{u}-base)"/>'
-        '<rect width="100%" height="100%" fill="url(#{u}-g1)"/>'
-        '<rect width="100%" height="100%" fill="url(#{u}-g2)"/>'
-    ).format(u=uid)
-    return defs, rects
-
-
-def pixel_cloud(x, y, s, color, opacity=1.0):
-    """像素云：底部平、顶部圆拱，由 3 个圆角 rect 组成。s 为基准格。"""
-    o = '' if opacity >= 1 else ' opacity="%s"' % opacity
-    return (
-        '<g fill="{c}"{o}>'
-        '<rect x="{x}" y="{y2}" width="{w5}" height="{s}" rx="{r}"/>'
-        '<rect x="{x1}" y="{y1}" width="{w3}" height="{s}" rx="{r}"/>'
-        '<rect x="{x2}" y="{y0}" width="{s}" height="{s}" rx="{r}"/>'
-        '</g>'
-    ).format(c=color, o=o, r=s // 2, s=s,
-             x=x, x1=x + s, x2=x + s * 2, y0=y, y1=y + s, y2=y + s * 2,
-             w3=s * 3, w5=s * 5)
-
-
-def pixel_text(x, y, text, size, color, anchor="start"):
-    """像素文本。y 为基线；调用方负责取整。"""
-    return (
-        '<text x="%d" y="%d" font-family="PSP2,monospace" font-size="%d" '
-        'fill="%s" text-anchor="%s">%s</text>'
-        % (int(x), int(y), size, color, anchor, esc(text))
+        # scrim：照搬主站 .bg-scrim 双层渐变
+        '<linearGradient id="scrim-h" x1="0" y1="0" x2="1" y2="0">'
+        '<stop offset="0" stop-color="rgba(8,8,9,.80)"/>'
+        '<stop offset="0.48" stop-color="rgba(8,8,9,.44)"/>'
+        '<stop offset="1" stop-color="rgba(8,8,9,.18)"/></linearGradient>'
+        '<linearGradient id="scrim-v" x1="0" y1="0" x2="0" y2="1">'
+        '<stop offset="0" stop-color="rgba(8,8,9,.58)"/>'
+        '<stop offset="0.32" stop-color="rgba(8,8,9,.34)"/>'
+        '<stop offset="1" stop-color="rgba(8,8,9,.84)"/></linearGradient>'
+        # grain：照搬主站 feTurbulence 噪点
+        '<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".9" '
+        'numOctaves="2"/></filter>'
     )
+    n = len(imgs)
+    cycle = n * BG_INTERVAL          # 42s 一整圈
+    # 单层时间轴：0→2s 淡入，保持到 7s，→9s 淡出，此后熄灭到圈末
+    k = [0, 2 / cycle, BG_INTERVAL / cycle, (BG_INTERVAL + 2) / cycle, 1]
+    body = '<rect width="%d" height="%d" fill="#0a0a0b"/>' % (w, h)
+    for i, b64 in enumerate(imgs):
+        body += (
+            '<g class="kb" opacity="0">'
+            '<animate attributeName="opacity" values="0;1;1;0;0" '
+            'keyTimes="0;%.4f;%.4f;%.4f;1" dur="%.1fs" begin="%.1fs" '
+            'repeatCount="indefinite"/>'
+            '<image href="data:image/webp;base64,%s" x="-40" y="-40" '
+            'width="%d" height="%d" preserveAspectRatio="xMidYMid slice"/>'
+            '</g>'
+            % (k[1], k[2], k[3], cycle, -i * BG_INTERVAL, b64, w + 80, h + 80)
+        )
+    body += (
+        '<rect width="%d" height="%d" fill="url(#scrim-h)"/>'
+        '<rect width="%d" height="%d" fill="url(#scrim-v)"/>'
+        '<rect width="%d" height="%d" filter="url(#grain)" opacity=".035" '
+        'style="mix-blend-mode:overlay"/>'
+        % (w, h, w, h, w, h)
+    )
+    return defs, body
 
 
-SANS = "-apple-system,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif"
+KB_CSS = (".kb{transform-origin:center;animation:kb 30s ease-in-out infinite alternate}"
+          "@keyframes kb{from{transform:scale(1.03)}to{transform:scale(1.13)}}")
 
-def sans_text(x, y, text, size, color, anchor="start", weight=600, spacing=0):
-    """系统字体文本（数据图表用，可读性优先）。y 为基线。"""
+
+def mono_text(x, y, text, size, color, anchor="start", weight=400, spacing=0,
+              font=None):
     sp = ' letter-spacing="%s"' % spacing if spacing else ""
     return (
         '<text x="%s" y="%s" font-family="%s" font-size="%s" font-weight="%s"'
         ' fill="%s" text-anchor="%s"%s>%s</text>'
-        % (x, y, SANS, size, weight, color, anchor, sp, esc(text))
+        % (x, y, font or MONO, size, weight, color, anchor, sp, esc(text))
     )
 
 
-def hard_rect(x, y, w, h, fill, stroke, shadow, off=3):
-    """像素块 = 偏移硬阴影 + 2px 描边直角矩形。"""
+def card(x, y, w, h, t, fill=None, stroke=None, rx=12):
+    """主站 panel：rgba 白底 + 细线 + 12px 圆角。"""
     return (
-        '<rect x="%d" y="%d" width="%d" height="%d" fill="%s"/>'
-        '<rect x="%d" y="%d" width="%d" height="%d" fill="%s" stroke="%s" stroke-width="2"/>'
-        % (x + off, y + off, w, h, shadow,
-           x, y, w, h, fill, stroke)
+        '<rect x="%d" y="%d" width="%d" height="%d" rx="%d" fill="%s" stroke="%s"/>'
+        % (x, y, w, h, rx, fill or t["panel"], stroke or t["line"])
     )
 
 
-def pixel_badge(x, y, text, size, fill, deep, stroke, shadow, pad_x=14, h=None, font="sans"):
-    """单个像素徽章，返回 (svg, width)。font='sans' 系统字体 / 'px' 像素字。"""
-    if h is None:
-        h = size + 16
-    w = len(text) * size + pad_x * 2
-    body = hard_rect(x, y, w, h, fill, deep if deep else stroke, shadow)
-    ty = y + (h + size) // 2 - 2
-    if font == "px":
-        body += pixel_text(x + pad_x, ty, text, size, deep)
-    else:
-        body += sans_text(x + pad_x, y + h // 2 + size * 0.36, text, size, deep, weight=700)
-    return body, w
-
-
-def badge_row(texts, y, size, t, shadow, gap=18, total_w=880, h=None, font="sans"):
-    """一行像素徽章，整体居中。返回 (svg, 行高)。"""
-    if h is None:
-        h = size + 14
-    widths = [len(t_) * size + 24 for t_ in texts]
-    row_w = sum(widths) + gap * (len(texts) - 1)
-    x = (total_w - row_w) // 2
-    parts = []
-    for i, t_ in enumerate(texts):
-        fill_k, deep_k = _BADGE_CYCLE[i % len(_BADGE_CYCLE)]
-        s, w = pixel_badge(x, y, t_, size, t[fill_k], t[deep_k], t["stroke"], shadow, h=h, font=font)
-        parts.append(s)
-        x += w + gap
-    return "".join(parts), h
-
-
-def pix(x, y, s, color):
-    """单个小像素方块（装饰用）。"""
-    return '<rect x="%d" y="%d" width="%d" height="%d" fill="%s"/>' % (x, y, s, s, color)
-
-
-def deco_row(cx, y, s=6, gap=6, colors=None, n=9):
-    """中点对称的装饰像素行。"""
-    if colors is None:
-        colors = ["acc", "mint_deep", "sky_deep", "pink_deep", "acc_deep"]
-    parts = []
-    step = s + gap
-    start = cx - (n // 2) * step
-    for i in range(n):
-        k = abs(i - n // 2)
-        c = colors[k % len(colors)]
-        parts.append(pix(start + i * step, y, s, c))
-    return "".join(parts)
+def eyebrow(x, y, text, t):
+    """主站 eyebrow：24px 金线 + 小金字（宽字距）。"""
+    return (
+        '<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s"/>'
+        % (x, y - 3, x + 24, y - 3, t["acc"])
+        + mono_text(x + 35, y, text, 10, t["acc"], spacing=3)
+    )
 
 
 def write(out_path, content):

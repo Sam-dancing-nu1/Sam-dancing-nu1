@@ -1,26 +1,17 @@
 {
  "schema": 1,
- "generatedAt": "2026-11-07T19:28:56Z",
+ "generatedAt": "2026-11-08T19:46:12Z",
  "login": "Sam-dancing-nu1",
  "name": "Sam-Dancing",
  "url": "https://github.com/Sam-dancing-nu1",
  "avatarUrl": "https://avatars.githubusercontent.com/u/180069876?u=ee035d5f1515be2972f681a35e40e6a9e58cb85d&v=4",
  "followers": 1,
  "following": 2,
- "publicRepos": 6,
+ "publicRepos": 8,
  "stars": 3,
  "contributions": {
-  "total": 500,
+  "total": 502,
   "weeks": [
-   {
-    "days": [
-     {
-      "d": "2025-11-08",
-      "c": 0,
-      "l": 0
-     }
-    ]
-   },
    {
     "days": [
      {
@@ -2048,6 +2039,15 @@
       "l": 0
      }
     ]
+   },
+   {
+    "days": [
+     {
+      "d": "2026-11-08",
+      "c": 2,
+      "l": 1
+     }
+    ]
    }
   ]
  },
@@ -2060,22 +2060,27 @@
   {
    "name": "TypeScript",
    "color": "#3178c6",
-   "size": 43261572
+   "size": 45510657
   },
   {
    "name": "JavaScript",
    "color": "#f1e05a",
-   "size": 4244924
+   "size": 17581024
   },
   {
    "name": "HTML",
    "color": "#e34c26",
-   "size": 1424474
+   "size": 1524058
   },
   {
    "name": "Rust",
    "color": "#dea584",
    "size": 776204
+  },
+  {
+   "name": "CSS",
+   "color": "#663399",
+   "size": 591186
   },
   {
    "name": "TeX",
@@ -2086,11 +2091,6 @@
    "name": "Java",
    "color": "#b07219",
    "size": 407586
-  },
-  {
-   "name": "Shell",
-   "color": "#89e051",
-   "size": 364191
   }
  ],
  "repos": [
@@ -2098,6 +2098,11 @@
    "name": "SD-agent",
    "url": "https://github.com/Sam-dancing-nu1/SD-agent",
    "stars": 3
+  },
+  {
+   "name": "magpie-hindsight",
+   "url": "https://github.com/Sam-dancing-nu1/magpie-hindsight",
+   "stars": 0
   },
   {
    "name": "Sam-dancing-nu1",
